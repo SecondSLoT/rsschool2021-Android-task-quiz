@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Quiz</string>
+
+    <string name="previous">previous</string>
+    <string name="next">next</string>
+    <string name="submit">submit</string>
+    <string name="question">question</string>
+    <string name="of">of</string>
+    <string name="quiz_results">quiz results</string>
+    <string name="your_result">your result</string>
+    <string name="your_answer">your answer</string>
 </resources>

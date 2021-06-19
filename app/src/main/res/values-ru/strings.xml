@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Quiz</string>
+    <string name="previous">предыдущий</string>
+    <string name="next">следующий</string>
+    <string name="submit">завершить</string>
+    <string name="question">вопрос</string>
+    <string name="of">из</string>
+    <string name="quiz_results">результаты квиза</string>
+    <string name="your_result">ваш результат</string>
+    <string name="your_answer">ваш ответ</string>
+</resources>
