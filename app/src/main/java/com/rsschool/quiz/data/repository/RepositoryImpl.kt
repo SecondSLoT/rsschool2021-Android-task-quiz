@@ -13,4 +13,12 @@ object RepositoryImpl : Repository {
         val questionEntityList = questionBank.getQuestions()
         return EntityToItemMapper.map(questionEntityList)
     }
+
+    override fun getAnswers(): IntArray {
+        return questionBank.getAnswers()
+    }
+
+    override fun setAnswers(answers: IntArray) {
+        questionBank.setAnswers(answers)
+    }
 }

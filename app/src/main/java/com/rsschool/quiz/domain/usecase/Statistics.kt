@@ -1,19 +1,22 @@
 package com.rsschool.quiz.domain.usecase
 
+import android.content.Context
+import com.rsschool.quiz.R
 import com.rsschool.quiz.data.repository.model.QuestionItem
+import com.rsschool.quiz.extentions.capitalize
 import kotlin.math.roundToInt
 
 class Statistics(
     private val questions: List<QuestionItem>,
-    private val answers: Array<Int>
+    private val answers: IntArray
 ) {
 
-    fun resultInPercent(): String {
+    fun getResultInPercent(): String {
         return "${(countRightAnswers().toDouble() / countQuestions().toDouble() * 100)
             .roundToInt()} %"
     }
 
-    private fun countRightAnswers(): Int {
+    fun countRightAnswers(): Int {
         var rightAnswers = 0
         for (i in questions.indices) {
             if (questions[i].answerNumber == answers[i]) {
@@ -23,18 +26,21 @@ class Statistics(
         return rightAnswers
     }
 
-    private fun countQuestions() = questions.size
+    fun countQuestions() = questions.size
 
-    fun getReport(): String {
+    fun getReport(context: Context): String {
         val report = StringBuilder(
-            "Your result: ${resultInPercent()}\n" +
+            "${context.getString(R.string.your_result).capitalize()}: " +
+                    "${getResultInPercent()}\n" +
                     "(${countRightAnswers()}/${countQuestions()})\n"
         )
 
         for (i in questions.indices) {
             report.append(
-                "\nQuestion ${i + 1}: ${questions[i].question}\n" +
-                        "Your answer: ${questions[i].answerOptions[answers[i]]}\n"
+                "\n${context.getString(R.string.question).capitalize()} ${i + 1}: " +
+                        "${questions[i].question}\n" +
+                        "${context.getString(R.string.your_answer).capitalize()}: " +
+                        "${questions[i].answerOptions?.get(answers[i])}\n"
             )
         }
 
