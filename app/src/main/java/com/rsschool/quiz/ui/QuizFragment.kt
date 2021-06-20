@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -25,6 +26,8 @@ class QuizFragment : Fragment() {
 
     interface Callbacks {
 
+        fun paintStatusBar()
+
         fun onChangeQuestionClicked(newPosition: Int, prevAnswer: Int, prevCheckedButtonId: Int)
 
         fun onSubmitButtonClicked(prevAnswer: Int, prevCheckedButtonId: Int)
@@ -38,6 +41,11 @@ class QuizFragment : Fragment() {
         } else {
             throw RuntimeException("$context must implement QuizFragment.Callbacks")
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        callbacks?.paintStatusBar()
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
@@ -91,6 +99,14 @@ class QuizFragment : Fragment() {
 
         setListeners()
         setObservers()
+
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    viewModel.onPreviousButtonClicked()
+                }
+            })
     }
 
     private fun isPreviousButtonVisible(isVisible: Boolean) {

@@ -78,8 +78,8 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         app:layout_constraintBottom_toTopOf="@id/margin_bottom_guideline"
-        app:layout_constraintStart_toEndOf="@id/restart_image_button"
         app:layout_constraintEnd_toStartOf="@id/exit_image_button"
+        app:layout_constraintStart_toEndOf="@id/restart_image_button"
         app:srcCompat="@drawable/ic_baseline_share_48" />
 
     <ImageButton

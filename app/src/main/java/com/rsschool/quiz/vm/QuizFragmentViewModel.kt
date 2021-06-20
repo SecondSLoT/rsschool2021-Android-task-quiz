@@ -17,10 +17,6 @@ class QuizFragmentViewModel : ViewModel() {
     val enableNextButtonLiveData: LiveData<Boolean>
         get() = enableNextButtonMutableLiveData
 
-    private var isPreviousButtonVisibleMutableLiveData = MutableLiveData(false)
-    val isPreviousButtonVisibleLiveData: LiveData<Boolean>
-        get() = isPreviousButtonVisibleMutableLiveData
-
     private var submitMutableLiveData = MutableLiveData<Boolean>()
     val submitLiveData: LiveData<Boolean>
         get() = submitMutableLiveData

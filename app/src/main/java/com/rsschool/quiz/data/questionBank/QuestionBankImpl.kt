@@ -54,17 +54,7 @@ object QuestionBankImpl : QuestionBank {
         ),
     )
 
-    private var answers = IntArray(questions.size)
-
     override fun getQuestions(): List<QuestionEntity> {
         return questions
-    }
-
-    override fun getAnswers(): IntArray {
-        return answers
-    }
-
-    override fun setAnswers(answers: IntArray) {
-        this.answers = answers
     }
 }
