@@ -1,7 +1,7 @@
 package com.rsschool.quiz.data.questionBank.model
 
 data class QuestionEntity(
-    val question: String, // @StringRes
+    val question: String,
     val answerOptions: Array<String>,
     val answerNumber: Int
 ) {
