@@ -2,25 +2,53 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
     <color name="teal_100">#B2DFDB</color>
     <color name="teal_100_light">#e4ffff</color>
     <color name="teal_100_dark">#81aba8</color>
+    <color name="teal_900">#004d40</color>
+    <color name="teal_900_light">#39796b</color>
+    <color name="teal_900_dark">#00251a</color>
+
     <color name="deep_orange_100">#ffccbc</color>
     <color name="deep_orange_100_light">#ffffee</color>
     <color name="deep_orange_100_dark">#cb9b8c</color>
+    <color name="deep_orange_900">#bf360c</color>
+    <color name="deep_orange_900_light">#f9683a</color>
+    <color name="deep_orange_900_dark">#870000</color>
+
     <color name="yellow_100">#fff9c4</color>
     <color name="yellow_100_light">#fffff7</color>
     <color name="yellow_100_dark">#cbc693</color>
+    <color name="yellow_900">#f57f17</color>
+    <color name="yellow_900_light">#ffb04c</color>
+    <color name="yellow_900_dark">#bc5100</color>
+
     <color name="blue_gray_100">#cfd8dc</color>
     <color name="blue_gray_100_light">#ffffff</color>
     <color name="blue_gray_100_dark">#9ea7aa</color>
+    <color name="blue_gray_900">#263238</color>
+    <color name="blue_gray_900_light">#4f5b62</color>
+    <color name="blue_gray_900_dark">#000a12</color>
+
     <color name="light_green_100">#dcedc8</color>
     <color name="light_green_100_light">#fffffb</color>
     <color name="light_green_100_dark">#aabb97</color>
+    <color name="light_green_900">#33691e</color>
+    <color name="light_green_900_light">#629749</color>
+    <color name="light_green_900_dark">#003d00</color>
+
     <color name="cyan_100">#b2ebf2</color>
     <color name="cyan_100_light">#e5ffff</color>
     <color name="cyan_100_dark">#81b9bf</color>
+    <color name="cyan_900">#006064</color>
+    <color name="cyan_900_light">#428e92</color>
+    <color name="cyan_900_dark">#00363a</color>
+
     <color name="deep_purple_100">#d1c4e9</color>
     <color name="deep_purple_100_light">#fff7ff</color>
     <color name="deep_purple_100_dark">#a094b7</color>
+    <color name="deep_purple_900">#311b92</color>
+    <color name="deep_purple_900_light">#6746c3</color>
+    <color name="deep_purple_900_dark">#000063</color>
 </resources>

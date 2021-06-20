@@ -15,6 +15,6 @@ object Themes {
     )
 
     fun getThemeId(number: Int): Int {
-        return themes[number - (number / themes.size) * themes.size]
+        return themes[number % themes.size]
     }
 }
