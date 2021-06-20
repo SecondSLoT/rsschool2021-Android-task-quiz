@@ -23,10 +23,9 @@ class QuizFragment : Fragment() {
     private var _binding: FragmentQuizBinding? = null
     private val binding get() = requireNotNull(_binding)
     private var callbacks: Callbacks? = null
+    private var callbackChangeTheme: ChangeTheme? = null
 
     interface Callbacks {
-
-        fun paintStatusBar()
 
         fun onChangeQuestionClicked(newPosition: Int, prevAnswer: Int, prevCheckedButtonId: Int)
 
@@ -41,10 +40,16 @@ class QuizFragment : Fragment() {
         } else {
             throw RuntimeException("$context must implement QuizFragment.Callbacks")
         }
+
+        if (context is ChangeTheme) {
+            callbackChangeTheme = context
+        } else {
+            throw RuntimeException("$context must implement ChangeTheme")
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        callbacks?.paintStatusBar()
+        callbackChangeTheme?.changeTheme()
         super.onCreate(savedInstanceState)
     }
 

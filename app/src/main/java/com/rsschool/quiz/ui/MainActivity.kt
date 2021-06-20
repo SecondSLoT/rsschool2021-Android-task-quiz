@@ -12,22 +12,25 @@ import com.rsschool.quiz.vm.MainActivityViewModel
 class MainActivity :
     AppCompatActivity(R.layout.activity_main),
     QuizFragment.Callbacks,
-    ResultFragment.Callbacks {
+    ResultFragment.Callbacks,
+    ChangeTheme {
 
     private val viewModel by viewModels<MainActivityViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        changeTheme(viewModel.position)
+        changeTheme()
         openQuizFragment()
     }
 
     private fun openQuizFragment() {
-        startFragment(QuizFragment.newInstance(
-            viewModel.position,
-            viewModel.questions,
-            viewModel.answers[viewModel.position],
-            viewModel.checkedButtonIds[viewModel.position])
+        startFragment(
+            QuizFragment.newInstance(
+                viewModel.position,
+                viewModel.questions,
+                viewModel.answers[viewModel.position],
+                viewModel.checkedButtonIds[viewModel.position]
+            )
         )
     }
 
@@ -45,27 +48,23 @@ class MainActivity :
     override fun onChangeQuestionClicked(
         newPosition: Int,
         prevAnswer: Int,
-        prevCheckedButtonId: Int) {
+        prevCheckedButtonId: Int
+    ) {
         viewModel.answers[viewModel.position] = prevAnswer
         viewModel.checkedButtonIds[viewModel.position] = prevCheckedButtonId
         viewModel.position = newPosition
-        changeTheme(viewModel.position)
         openQuizFragment()
     }
 
     override fun onSubmitButtonClicked(prevAnswer: Int, prevCheckedButtonId: Int) {
         viewModel.answers[viewModel.position] = prevAnswer
         viewModel.checkedButtonIds[viewModel.position] = prevCheckedButtonId
-        changeTheme(0)
-        paintStatusBar()
+        viewModel.position = 0
         openResultFragment()
     }
 
-    private fun changeTheme(position: Int) {
-        setTheme(Themes.getThemeId(position))
-    }
-
-    override fun paintStatusBar() {
+    override fun changeTheme() {
+        setTheme(Themes.getThemeId(viewModel.position))
         val typedValue = TypedValue()
         theme.resolveAttribute(android.R.attr.statusBarColor, typedValue, true);
         window.statusBarColor = typedValue.data

@@ -21,6 +21,7 @@ class ResultFragment : Fragment() {
     private val binding get() = requireNotNull(_binding)
     private val viewModel by viewModels<ResultFragmentViewModel>()
     private var callbacks: Callbacks? = null
+    private var callbackChangeTheme: ChangeTheme? = null
 
     interface Callbacks {
         fun onRestartButtonClicked()
@@ -33,6 +34,17 @@ class ResultFragment : Fragment() {
         } else {
             throw RuntimeException("$context must implement ResultFragment.Callbacks")
         }
+
+        if (context is ChangeTheme) {
+            callbackChangeTheme = context
+        } else {
+            throw RuntimeException("$context must implement ChangeTheme")
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        callbackChangeTheme?.changeTheme()
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
