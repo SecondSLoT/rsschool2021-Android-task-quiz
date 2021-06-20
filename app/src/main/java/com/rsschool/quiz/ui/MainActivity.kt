@@ -18,6 +18,7 @@ class MainActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        changeTheme(viewModel.position)
         openQuizFragment()
     }
 
@@ -62,9 +63,6 @@ class MainActivity :
 
     private fun changeTheme(position: Int) {
         setTheme(Themes.getThemeId(position))
-        val typedValue = TypedValue()
-        theme.resolveAttribute(android.R.attr.statusBarColor, typedValue, true);
-        window.statusBarColor = typedValue.data
     }
 
     override fun paintStatusBar() {
