@@ -38,9 +38,11 @@ class Statistics(
         for (i in questions.indices) {
             report.append(
                 "\n${context.getString(R.string.question).capitalize()} ${i + 1}: " +
-                        "${questions[i].question}\n" +
+                        "${context.getString(questions[i].questionRes)}\n" +
                         "${context.getString(R.string.your_answer).capitalize()}: " +
-                        "${questions[i].answerOptions?.get(answers[i])}\n"
+                        "${questions[i].answerOptions?.get(answers[i])?.let { 
+                            context.getString(it) 
+                        } }\n"
             )
         }
 

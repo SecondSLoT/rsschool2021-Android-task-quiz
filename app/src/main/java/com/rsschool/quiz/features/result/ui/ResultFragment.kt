@@ -1,4 +1,4 @@
-package com.rsschool.quiz.ui
+package com.rsschool.quiz.features.result.ui
 
 import android.content.Context
 import android.content.Intent
@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,7 +14,11 @@ import com.rsschool.quiz.R
 import com.rsschool.quiz.data.repository.model.QuestionItem
 import com.rsschool.quiz.databinding.FragmentResultBinding
 import com.rsschool.quiz.extentions.capitalize
-import com.rsschool.quiz.vm.ResultFragmentViewModel
+import com.rsschool.quiz.view.dialog.ExitDialog
+import com.rsschool.quiz.features.result.vm.ResultFragmentViewModel
+import com.rsschool.quiz.view.ChangeTheme
+import com.rsschool.quiz.view.RegisterFragmentId
+import com.rsschool.quiz.view.dialog.RestartDialog
 
 class ResultFragment : Fragment() {
 
@@ -21,6 +26,7 @@ class ResultFragment : Fragment() {
     private val binding get() = requireNotNull(_binding)
     private val viewModel by viewModels<ResultFragmentViewModel>()
     private var callbacks: Callbacks? = null
+    private var callbackRegisterFragmentId: RegisterFragmentId? = null
     private var callbackChangeTheme: ChangeTheme? = null
 
     interface Callbacks {
@@ -35,6 +41,12 @@ class ResultFragment : Fragment() {
             throw RuntimeException("$context must implement ResultFragment.Callbacks")
         }
 
+        if (context is RegisterFragmentId) {
+            callbackRegisterFragmentId = context
+        } else {
+            throw RuntimeException("$context must implement RegisterFragmentId")
+        }
+
         if (context is ChangeTheme) {
             callbackChangeTheme = context
         } else {
@@ -44,6 +56,7 @@ class ResultFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         callbackChangeTheme?.changeTheme()
+        callbackRegisterFragmentId?.registerLastOpenedFragment(RESULT_FRAGMENT_ID)
         super.onCreate(savedInstanceState)
     }
 
@@ -72,8 +85,16 @@ class ResultFragment : Fragment() {
         binding.run {
             restartImageButton.setOnClickListener { viewModel.onRestartButtonClicked() }
             shareImageButton.setOnClickListener { viewModel.onShareButtonClicked() }
-            exitImageButton.setOnClickListener { viewModel.onExitButtonClicked() }
+            exitImageButton.setOnClickListener { showExitDialog() }
         }
+
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    showExitDialog()
+                }
+            })
     }
 
     private fun setObservers() {
@@ -87,11 +108,19 @@ class ResultFragment : Fragment() {
             { binding.resultTextView.text = it }
         )
         viewModel.restartQuizLiveData.observe(
-            viewLifecycleOwner, { if (it) callbacks?.onRestartButtonClicked() }
+            viewLifecycleOwner, { if (it) showRestartDialog() }
         )
         viewModel.shareLiveData.observe(
             viewLifecycleOwner, { if (it) sendReport() }
         )
+    }
+
+    private fun showExitDialog() {
+        ExitDialog().show(parentFragmentManager, ExitDialog.TAG)
+    }
+
+    private fun showRestartDialog() {
+        RestartDialog().show(parentFragmentManager, RestartDialog.TAG)
     }
 
     private fun sendReport() {
@@ -99,7 +128,7 @@ class ResultFragment : Fragment() {
             type = "text/plain"
             putExtra(Intent.EXTRA_SUBJECT, context?.getString(R.string.quiz_results)?.capitalize())
             putExtra(Intent.EXTRA_TEXT, context?.let { viewModel.statistics?.getReport(it) })
-        }.also {intent ->
+        }.also { intent ->
             startActivity(intent)
         }
     }
@@ -114,8 +143,9 @@ class ResultFragment : Fragment() {
         callbacks = null
     }
 
-
     companion object {
+
+        const val RESULT_FRAGMENT_ID = "result_fragment"
         private const val QUESTIONS = "QUESTIONS"
         private const val ANSWERS = "ANSWERS"
 

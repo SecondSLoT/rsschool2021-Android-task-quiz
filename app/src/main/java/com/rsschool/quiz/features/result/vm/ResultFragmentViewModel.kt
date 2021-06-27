@@ -1,4 +1,4 @@
-package com.rsschool.quiz.vm
+package com.rsschool.quiz.features.result.vm
 
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -8,7 +8,6 @@ import com.rsschool.quiz.R
 import com.rsschool.quiz.data.repository.model.QuestionItem
 import com.rsschool.quiz.domain.usecase.Statistics
 import com.rsschool.quiz.extentions.capitalize
-import kotlin.system.exitProcess
 
 class ResultFragmentViewModel : ViewModel() {
 
@@ -47,9 +46,5 @@ class ResultFragmentViewModel : ViewModel() {
 
     fun onShareButtonClicked() {
         shareMutableLiveData.value = true
-    }
-
-    fun onExitButtonClicked() {
-        exitProcess(0)
     }
 }

@@ -9,4 +9,76 @@
     <string name="quiz_results">результаты квиза</string>
     <string name="your_result">ваш результат</string>
     <string name="your_answer">ваш ответ</string>
+
+    <!--Exit dialog-->
+    <string name="exit_dialog_title">Закрыть приложение?</string>
+    <string name="exit_dialog_message">Результаты квиза не будут сохранены</string>
+
+    <!--Restart dialog-->
+    <string name="restart_dialog_title">Попробовать ещё раз?</string>
+    <string name="restart_dialog_message">Текущий результат квиза будет сброшен</string>
+
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+
+    <!--Quiz-->
+    <string name="question_1">Территория какой из этих стран - наибольшая?</string>
+    <string name="answer_1_1">Германия</string>
+    <string name="answer_1_2">Япония</string>
+    <string name="answer_1_3">Италия</string>
+    <string name="answer_1_4">Польша</string>
+    <string name="answer_1_5">Финляндия</string>
+
+    <string name="question_2">Какой из этих городов - родина Казановы?</string>
+    <string name="answer_2_1">Неаполь</string>
+    <string name="answer_2_2">Милан</string>
+    <string name="answer_2_3">Верона</string>
+    <string name="answer_2_4">Флоренция</string>
+    <string name="answer_2_5">Венеция</string>
+
+    <string name="question_3">Кто считается основоположником кубизма?</string>
+    <string name="answer_3_1">В. Кандинский</string>
+    <string name="answer_3_2">Ф. Леже</string>
+    <string name="answer_3_3">К. Моне</string>
+    <string name="answer_3_4">П. Пикассо</string>
+    <string name="answer_3_5">К. Малевич</string>
+
+    <string name="question_4">Какая березка стояла во поле?</string>
+    <string name="answer_4_1">Высокая</string>
+    <string name="answer_4_2">Кудрявая</string>
+    <string name="answer_4_3">Зеленая</string>
+    <string name="answer_4_4">Засохшая</string>
+    <string name="answer_4_5">Красивая</string>
+
+    <string name="question_5">С какой фигуры начинаются соревнования по городошному спорту?</string>
+    <string name="answer_5_1">Пушка</string>
+    <string name="answer_5_2">Пулемётное гнездо</string>
+    <string name="answer_5_3">Ракета</string>
+    <string name="answer_5_4">Артиллерия</string>
+    <string name="answer_5_5">Часовые</string>
+
+    <string name="question_6">Благодаря какому животному Шурик познакомился с Ниной в к/ф \"Кавказская пленница\"?</string>
+    <string name="answer_6_1">Верблюд</string>
+    <string name="answer_6_2">Ёжик</string>
+    <string name="answer_6_3">Осёл</string>
+    <string name="answer_6_4">Конь</string>
+    <string name="answer_6_5">Бык</string>
+
+    <string name="question_7">За какую плату работал Балда у попа в сказке А.С. Пушкина \"Сказка о попе и работнике его Балде\"?</string>
+    <string name="answer_7_1">Три подзатыльника</string>
+    <string name="answer_7_2">Три пинка</string>
+    <string name="answer_7_3">Три рубля</string>
+    <string name="answer_7_4">Три щелчка по лбу</string>
+    <string name="answer_7_5">Три поцелуя</string>
+
+    <string name="question_8">Где муха-цокотуха нашла денежку?</string>
+    <string name="answer_8_1">На лугу</string>
+    <string name="answer_8_2">В лесу</string>
+    <string name="answer_8_3">В поле</string>
+    <string name="answer_8_4">Во дворе</string>
+    <string name="answer_8_5">На вписке</string>
+
+    <string name="question_9">Сколько баллов вы поставите за эту работу? ;)</string>
+    <string name="answer_9_5">Все, что есть, поставлю!</string>
+
 </resources>

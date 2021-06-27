@@ -1,4 +1,4 @@
-package com.rsschool.quiz.ui
+package com.rsschool.quiz.view
 
 interface ChangeTheme {
     fun changeTheme()

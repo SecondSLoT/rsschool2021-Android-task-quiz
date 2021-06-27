@@ -1,4 +1,4 @@
-package com.rsschool.quiz.ui
+package com.rsschool.quiz.features.quiz.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -10,11 +10,15 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.google.android.material.radiobutton.MaterialRadioButton
 import com.rsschool.quiz.R
 import com.rsschool.quiz.data.repository.model.QuestionItem
 import com.rsschool.quiz.databinding.FragmentQuizBinding
 import com.rsschool.quiz.extentions.capitalize
-import com.rsschool.quiz.vm.QuizFragmentViewModel
+import com.rsschool.quiz.view.ChangeTheme
+import com.rsschool.quiz.features.quiz.vm.QuizFragmentViewModel
+import com.rsschool.quiz.view.RegisterFragmentId
+import com.rsschool.quiz.view.dialog.ExitDialog
 
 
 class QuizFragment : Fragment() {
@@ -23,13 +27,16 @@ class QuizFragment : Fragment() {
     private var _binding: FragmentQuizBinding? = null
     private val binding get() = requireNotNull(_binding)
     private var callbacks: Callbacks? = null
+    private var callbackRegisterFragmentId: RegisterFragmentId? = null
     private var callbackChangeTheme: ChangeTheme? = null
 
     interface Callbacks {
 
-        fun onChangeQuestionClicked(newPosition: Int, prevAnswer: Int, prevCheckedButtonId: Int)
+        fun onAnswerChosen(answer: Int)
 
-        fun onSubmitButtonClicked(prevAnswer: Int, prevCheckedButtonId: Int)
+        fun onChangeQuestionClicked(newPosition: Int)
+
+        fun onSubmitButtonClicked()
     }
 
     override fun onAttach(context: Context) {
@@ -41,6 +48,12 @@ class QuizFragment : Fragment() {
             throw RuntimeException("$context must implement QuizFragment.Callbacks")
         }
 
+        if (context is RegisterFragmentId) {
+            callbackRegisterFragmentId = context
+        } else {
+            throw RuntimeException("$context must implement RegisterFragmentId")
+        }
+
         if (context is ChangeTheme) {
             callbackChangeTheme = context
         } else {
@@ -50,6 +63,7 @@ class QuizFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         callbackChangeTheme?.changeTheme()
+        callbackRegisterFragmentId?.registerLastOpenedFragment(QUIZ_FRAGMENT_ID)
         super.onCreate(savedInstanceState)
     }
 
@@ -69,49 +83,41 @@ class QuizFragment : Fragment() {
         viewModel.questions =
             arguments?.getParcelableArrayList(QUESTIONS) ?: emptyList()
         viewModel.answer = arguments?.getInt(ANSWER) ?: -1
-        viewModel.checkedButtonId = arguments?.getInt(CHECKED_BUTTON_ID) ?: -1
 
-        if (viewModel.position != viewModel.questions.size - 1) {
-            binding.nextButton.text = context?.getString(R.string.next)
-        } else {
+        if (viewModel.position == viewModel.questions.size - 1) {
             binding.nextButton.text = context?.getString(R.string.submit)
         }
 
         if (viewModel.position == 0) isPreviousButtonVisible(false)
+        if (viewModel.answer == -1) isNextButtonEnabled(false)
 
         binding.run {
-            toolbar.title = "${context?.getString(R.string.question)?.capitalize()} " +
+            toolbar.title = "${getString(R.string.question).capitalize()} " +
                     "${viewModel.position + 1} " +
-                    "${context?.getString(R.string.of)} ${viewModel.questions.size}"
-            question.text = viewModel.questions[viewModel.position].question
-            optionOne.text = viewModel.questions[viewModel.position].answerOptions?.get(0)
-            optionTwo.text = viewModel.questions[viewModel.position].answerOptions?.get(1)
-            optionThree.text = viewModel.questions[viewModel.position].answerOptions?.get(2)
-            optionFour.text = viewModel.questions[viewModel.position].answerOptions?.get(3)
-            optionFive.text = viewModel.questions[viewModel.position].answerOptions?.get(4)
+                    "${getString(R.string.of)} ${viewModel.questions.size}"
 
-            if (viewModel.checkedButtonId != -1) {
-                radioGroup.check(viewModel.checkedButtonId)
-            } else {
-                isNextButtonEnabled(false)
-            }
+            question.text = getString(viewModel.questions[viewModel.position].questionRes)
+        }
 
-            radioGroup.setOnCheckedChangeListener { group, checkedId ->
-                val checkedButton = group.findViewById<RadioButton>(checkedId)
-                viewModel.onAnswerChosen(checkedId, group.indexOfChild(checkedButton))
-            }
+        val answerOptionsNumber = viewModel.questions[viewModel.position].answerOptions?.size ?: 0
+
+        for (i in 0 until answerOptionsNumber) {
+            val radioButton = MaterialRadioButton(requireContext())
+            radioButton.text =
+                viewModel.questions[viewModel.position].answerOptions?.get(i)?.let {
+                    getString(it)
+                }
+            binding.radioGroup.addView(
+                radioButton,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            if (i == viewModel.answer) radioButton.isChecked = true
         }
 
         setListeners()
         setObservers()
 
-        requireActivity()
-            .onBackPressedDispatcher
-            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    viewModel.onPreviousButtonClicked()
-                }
-            })
     }
 
     private fun isPreviousButtonVisible(isVisible: Boolean) {
@@ -140,7 +146,25 @@ class QuizFragment : Fragment() {
             toolbar.setNavigationOnClickListener {
                 viewModel.onPreviousButtonClicked()
             }
+
+            radioGroup.setOnCheckedChangeListener { group, checkedId ->
+                val checkedButton = group.findViewById<RadioButton>(checkedId)
+                viewModel.onAnswerChosen(group.indexOfChild(checkedButton))
+                callbacks?.onAnswerChosen(viewModel.answer)
+            }
         }
+
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (viewModel.position > 0) {
+                        viewModel.onPreviousButtonClicked()
+                    } else {
+                        ExitDialog().show(parentFragmentManager, ExitDialog.TAG)
+                    }
+                }
+            })
     }
 
     private fun setObservers() {
@@ -159,15 +183,11 @@ class QuizFragment : Fragment() {
     }
 
     private fun changeQuestion(newPosition: Int) {
-        callbacks?.onChangeQuestionClicked(
-            newPosition,
-            viewModel.answer,
-            viewModel.checkedButtonId
-        )
+        callbacks?.onChangeQuestionClicked(newPosition)
     }
 
     private fun submit() {
-        callbacks?.onSubmitButtonClicked(viewModel.answer, viewModel.checkedButtonId)
+        callbacks?.onSubmitButtonClicked()
     }
 
     override fun onDestroyView() {
@@ -182,16 +202,15 @@ class QuizFragment : Fragment() {
 
     companion object {
 
+        const val QUIZ_FRAGMENT_ID = "quiz_fragment"
         private const val POSITION = "position"
         private const val QUESTIONS = "questions"
         private const val ANSWER = "answer"
-        private const val CHECKED_BUTTON_ID = "checked_button_id"
 
         fun newInstance(
             position: Int,
             questions: List<QuestionItem>,
             answer: Int,
-            checkedButtonId: Int
         ): QuizFragment {
 
             val fragment = QuizFragment()
@@ -199,7 +218,6 @@ class QuizFragment : Fragment() {
                 POSITION to position,
                 QUESTIONS to questions,
                 ANSWER to answer,
-                CHECKED_BUTTON_ID to checkedButtonId
             )
             return fragment
         }
