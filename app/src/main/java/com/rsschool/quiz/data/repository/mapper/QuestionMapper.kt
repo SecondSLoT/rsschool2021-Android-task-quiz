@@ -8,7 +8,7 @@ object EntityToItemMapper : Mapper<List<QuestionEntity>, List<QuestionItem>> {
     override fun map(type: List<QuestionEntity>?): List<QuestionItem> {
         return type?.map {
             QuestionItem(
-                question = it.question,
+                questionRes = it.questionRes,
                 answerOptions = it.answerOptions,
                 answerNumber = it.answerNumber
             )

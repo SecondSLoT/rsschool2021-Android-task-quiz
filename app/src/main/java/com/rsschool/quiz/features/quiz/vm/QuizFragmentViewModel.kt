@@ -1,4 +1,4 @@
-package com.rsschool.quiz.vm
+package com.rsschool.quiz.features.quiz.vm
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -11,7 +11,6 @@ class QuizFragmentViewModel : ViewModel() {
     var position: Int = 0
     var questions: List<QuestionItem> = emptyList()
     var answer: Int = -1
-    var checkedButtonId: Int = -1
 
     private var enableNextButtonMutableLiveData = MutableLiveData<Boolean>()
     val enableNextButtonLiveData: LiveData<Boolean>
@@ -26,11 +25,9 @@ class QuizFragmentViewModel : ViewModel() {
         get() = positionMutableLiveData
 
 
-    fun onAnswerChosen(checkedButtonId: Int, answerIndex: Int) {
-        Log.d("TAG", "onAnswerChosen called: $answerIndex")
+    fun onAnswerChosen(answerIndex: Int) {
         enableNextButtonMutableLiveData.value = true
             answer = answerIndex
-            this.checkedButtonId = checkedButtonId
     }
 
     fun onNextButtonClicked() {
@@ -42,7 +39,6 @@ class QuizFragmentViewModel : ViewModel() {
     }
 
     fun onPreviousButtonClicked() {
-        enableNextButtonMutableLiveData.value = true
         positionMutableLiveData.value = position - 1
     }
 }

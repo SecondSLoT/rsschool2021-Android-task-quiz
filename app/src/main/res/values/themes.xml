@@ -4,10 +4,15 @@
         <item name="colorOnSecondary">@color/black</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="imageButtonStyle">@style/ImageButtonStyle</item>
+        <item name="materialAlertDialogTheme">@style/AlertDialogOverlay</item>
     </style>
 
     <style name="ImageButtonStyle" parent="Widget.AppCompat.ImageButton">
         <item name="backgroundTint">@android:color/transparent</item>
+    </style>
+
+    <style name="AlertDialogOverlay" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="colorPrimary">@color/teal_100_dark</item>
     </style>
 
     <style name="Theme.Quiz.First" parent="Theme.Quiz">

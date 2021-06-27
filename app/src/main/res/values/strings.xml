@@ -9,4 +9,82 @@
     <string name="quiz_results">quiz results</string>
     <string name="your_result">your result</string>
     <string name="your_answer">your answer</string>
+
+    <!--Exit dialog-->
+    <string name="exit_dialog_title">Close application?</string>
+    <string name="exit_dialog_message">Your quiz results won\'t be saved</string>
+
+    <!--Restart dialog-->
+    <string name="restart_dialog_title">Try one more time?</string>
+    <string name="restart_dialog_message">Current quiz result will be dropped</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <!--Quiz-->
+    <string name="question_1">Which of these countries has the largest territory?</string>
+    <string name="answer_1_1">Germany</string>
+    <string name="answer_1_2">Japan</string>
+    <string name="answer_1_3">Italy</string>
+    <string name="answer_1_4">Poland</string>
+    <string name="answer_1_5">Finland</string>
+
+    <string name="question_2">Which of these cities is the birthplace of Casanova?</string>
+    <string name="answer_2_1">Naples</string>
+    <string name="answer_2_2">Milan</string>
+    <string name="answer_2_3">Verona</string>
+    <string name="answer_2_4">Florence</string>
+    <string name="answer_2_5">Venice</string>
+
+    <string name="question_3">Who is considered the founder of Cubism?</string>
+    <string name="answer_3_1">V. Kandinsky</string>
+    <string name="answer_3_2">F. Leger</string>
+    <string name="answer_3_3">K. Monet</string>
+    <string name="answer_3_4">P. Picasso</string>
+    <string name="answer_3_5">K. Malevich</string>
+
+    <string name="question_4">What birch tree stood in the field?</string>
+    <string name="answer_4_1">High</string>
+    <string name="answer_4_2">Curly</string>
+    <string name="answer_4_3">Green</string>
+    <string name="answer_4_4">Dried</string>
+    <string name="answer_4_5">Beautiful</string>
+
+    <string name="question_5">With what figure do the competitions in \"gorodki\" sports begin?
+    </string>
+    <string name="answer_5_1">Cannon</string>
+    <string name="answer_5_2">Machine gun nest</string>
+    <string name="answer_5_3">Rocket</string>
+    <string name="answer_5_4">Artillery</string>
+    <string name="answer_5_5">Sentries</string>
+
+    <string name="question_6">Thanks to which animal Shurik met Nina in the movie
+        \"Caucasian captive\"?</string>
+    <string name="answer_6_1">Camel</string>
+    <string name="answer_6_2">Hedgehog</string>
+    <string name="answer_6_3">Donkey</string>
+    <string name="answer_6_4">Horse</string>
+    <string name="answer_6_5">Bull</string>
+
+    <string name="question_7">For what fee did the Fool work for the priest in the fairy tale
+by A.S. Pushkin \"The tale of the priest and his worker Balda\"?</string>
+    <string name="answer_7_1">Three slaps on the back of the head</string>
+    <string name="answer_7_2">Three kicks</string>
+    <string name="answer_7_3">Three rubles</string>
+    <string name="answer_7_4">Three clicks on the forehead</string>
+    <string name="answer_7_5">Three kisses</string>
+
+    <string name="question_8">Where did the fly-tsokotukha find the money?</string>
+    <string name="answer_8_1">In the meadow</string>
+    <string name="answer_8_2">In the forest</string>
+    <string name="answer_8_3">In the field</string>
+    <string name="answer_8_4">In the courtyard</string>
+    <string name="answer_8_5">At the party</string>
+
+    <string name="question_9">How many points will you give for this work? ;)</string>
+    <string name="answer_9_1" translatable="false">100</string>
+    <string name="answer_9_2" translatable="false">200</string>
+    <string name="answer_9_3" translatable="false">500</string>
+    <string name="answer_9_4" translatable="false">1000</string>
+    <string name="answer_9_5">I\'ll give every points I have!</string>
 </resources>

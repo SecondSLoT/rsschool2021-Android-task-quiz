@@ -1,8 +1,10 @@
 package com.rsschool.quiz.data.questionBank.model
 
+import androidx.annotation.StringRes
+
 data class QuestionEntity(
-    val question: String, // @StringRes
-    val answerOptions: Array<String>,
+    @StringRes val questionRes: Int,
+    val answerOptions: IntArray,
     val answerNumber: Int
 ) {
 
@@ -12,7 +14,7 @@ data class QuestionEntity(
 
         other as QuestionEntity
 
-        if (question != other.question) return false
+        if (questionRes != other.questionRes) return false
         if (!answerOptions.contentEquals(other.answerOptions)) return false
         if (answerNumber != other.answerNumber) return false
 
@@ -20,7 +22,7 @@ data class QuestionEntity(
     }
 
     override fun hashCode(): Int {
-        var result = question.hashCode()
+        var result = questionRes
         result = 31 * result + answerOptions.contentHashCode()
         result = 31 * result + answerNumber
         return result
