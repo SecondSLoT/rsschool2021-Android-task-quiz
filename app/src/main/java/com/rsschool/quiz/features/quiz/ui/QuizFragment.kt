@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
-import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -156,15 +156,14 @@ class QuizFragment : Fragment() {
 
         requireActivity()
             .onBackPressedDispatcher
-            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    if (viewModel.position > 0) {
-                        viewModel.onPreviousButtonClicked()
-                    } else {
-                        ExitDialog().show(parentFragmentManager, ExitDialog.TAG)
-                    }
+            .addCallback(viewLifecycleOwner) {
+                if (viewModel.position > 0) {
+                    viewModel.onPreviousButtonClicked()
+                } else {
+                    ExitDialog().show(parentFragmentManager, ExitDialog.TAG)
                 }
-            })
+            }
+
     }
 
     private fun setObservers() {
